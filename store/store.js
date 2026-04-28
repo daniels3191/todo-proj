@@ -3,12 +3,14 @@ const { createStore } = Redux
 
 const initialState = {
     todos: null,
-    isLoading: false
+    isLoading: false,
+    filterBy: {}
 }
 
 const INCREMENT = 'INCREMENT'
 export const SET_TODOS = 'SET_TODOS'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
+export const SET_FILTERBY = 'SET_FILTERBY'
 
 function appReducer(state = initialState, cmd) {
 
@@ -21,6 +23,9 @@ function appReducer(state = initialState, cmd) {
 
         case SET_IS_LOADING:
             return { ...state, isLoading: cmd.isLoading }
+
+        case SET_FILTERBY:
+            return { ...state, filterBy: cmd.filterBy }
 
 
         default:

@@ -3,7 +3,7 @@ import { TodoList } from "../cmps/TodoList.jsx"
 import { DataTable } from "../cmps/data-table/DataTable.jsx"
 import { todoService } from "../services/todo.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
-import { changeIsLoading, loadTodos } from "../store/actions/todo.actions.js"
+import { changeIsLoading, loadTodos, setFilterBy } from "../store/actions/todo.actions.js"
 
 
 const { useState, useEffect } = React
@@ -13,25 +13,20 @@ const { useSelector, useDispatch } = ReactRedux
 export function TodoIndex() {
 
     const todos = useSelector(state => state.todos)
-
-    // const [todos, setTodos] = useState(null)
+    const filterBy = useSelector(state => state.filterBy)
 
     // Special hook for accessing search-params:
     const [searchParams, setSearchParams] = useSearchParams()
 
     const defaultFilter = todoService.getFilterFromSearchParams(searchParams)
 
-    const [filterBy, setFilterBy] = useState(defaultFilter)
+    useEffect(() => {
+        setFilterBy(defaultFilter)
+    }, [])
 
     useEffect(() => {
         setSearchParams(filterBy)
         loadTodos(filterBy)
-        // todoService.query(filterBy)
-        //     .then(todos => setTodos(todos))
-        //     .catch(err => {
-        //         console.eror('err:', err)
-        //         showErrorMsg('Cannot load todos')
-        //     })
     }, [filterBy])
 
     function onRemoveTodo(todoId) {
@@ -60,10 +55,10 @@ export function TodoIndex() {
     }
 
     if (!todos) {
-        changeIsLoading('true')
+        changeIsLoading(true)
         return <div>Loading...</div>
     } else {
-        changeIsLoading('flase')
+        changeIsLoading(false)
         return (
             <section className="todo-index">
                 <TodoFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />

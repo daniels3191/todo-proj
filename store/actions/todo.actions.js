@@ -1,6 +1,6 @@
 import { showErrorMsg } from "../../services/event-bus.service.js";
 import { todoService } from "../../services/todo.service.js";
-import { SET_IS_LOADING, SET_TODOS, store } from "../store.js";
+import { SET_FILTERBY, SET_IS_LOADING, SET_TODOS, store } from "../store.js";
 
 
 
@@ -14,8 +14,13 @@ export function loadTodos(filterBy = {}) {
 
 }
 
-export function changeIsLoading(isLoading){
-    console.log(`isLoading: ${isLoading}`);
-    
+export function changeIsLoading(isLoading){  
     store.dispatch({ type: SET_IS_LOADING, isLoading })
+}
+
+export function setFilterBy(filterBy){
+    console.log(filterBy);
+    
+     store.dispatch({ type: SET_FILTERBY, filterBy })
+
 }
