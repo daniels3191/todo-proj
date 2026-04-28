@@ -1,15 +1,20 @@
 const { useEffect, useState } = React
+const { useSelector, useDispatch } = ReactRedux
+
 import {Chart} from '../cmps/Chart.jsx'
 import { todoService } from '../services/todo.service.js'
+import { loadTodos } from '../store/actions/todo.actions.js'
 
 export function Dashboard() {
 
-    const [todos, setTodos] = useState([])
+    // const [todos, setTodos] = useState([])
+    const todos = useSelector(state => state.todos)
     const [importanceStats, setImportanceStats] = useState([])
 
     useEffect(()=>{
-        todoService.query()
-            .then(setTodos)
+        // todoService.query()
+        //     .then(setTodos)
+        loadTodos()
         todoService.getImportanceStats()
             .then(setImportanceStats)
     }, [])
