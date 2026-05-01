@@ -9,11 +9,12 @@ export function loadTodos(filterBy = {}) {
 
     return todoService.query(filterBy)
         .then(todos => store.dispatch({ type: SET_TODOS, todos }))
-        .finally(() => store.dispatch({ type: SET_IS_LOADING, isLoading: true }))
         .catch(err => {
             console.log('err:', err)
             showErrorMsg('Cannot load todos')
         })
+        .finally(() => store.dispatch({ type: SET_IS_LOADING, isLoading: false }))
+
 }
 
 export function removeTodo(todoId) {
@@ -21,7 +22,7 @@ export function removeTodo(todoId) {
 
     return todoService.remove(todoId)
         .then(() => store.dispatch({ type: REMOVE_TODOS, todoId }))
-        .finally(() => store.dispatch({ type: SET_IS_LOADING, isLoading: true }))
+        .finally(() => store.dispatch({ type: SET_IS_LOADING, isLoading: false }))
 
 
 }
@@ -32,7 +33,7 @@ export function saveTodo(todo) {
     const type = todo._id ? UPDATE_TODOS : ADD_TODOS
     return todoService.save(todo)
         .then((todo) => store.dispatch({ type, todo }))
-        .finally(() => store.dispatch({ type: SET_IS_LOADING, isLoading: true }))
+        .finally(() => store.dispatch({ type: SET_IS_LOADING, isLoading: false }))
 }
 
 

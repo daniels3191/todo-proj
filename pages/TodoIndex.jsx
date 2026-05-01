@@ -4,6 +4,7 @@ import { DataTable } from "../cmps/data-table/DataTable.jsx"
 import { todoService } from "../services/todo.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { changeIsLoading, loadTodos, removeTodo, setFilterBy } from "../store/actions/todo.actions.js"
+import { Loader } from "../cmps/Loader.jsx"
 
 
 const { useState, useEffect } = React
@@ -13,6 +14,7 @@ const { useSelector, useDispatch } = ReactRedux
 export function TodoIndex() {
 
     const todos = useSelector(state => state.todos)
+    const isLoading = useSelector(state => state.isLoading)
     const filterBy = useSelector(state => state.filterBy)
 
     // Special hook for accessing search-params:
@@ -61,12 +63,15 @@ export function TodoIndex() {
                     <Link to="/todo/edit" className="btn" >Add Todo</Link>
                 </div>
                 <h2>Todos List</h2>
-                <TodoList todos={todos} onRemoveTodo={onRemoveTodo} onToggleTodo={onToggleTodo} />
-                <hr />
-                <h2>Todos Table</h2>
-                <div style={{ width: '60%', margin: 'auto' }}>
-                    <DataTable todos={todos} onRemoveTodo={onRemoveTodo} />
-                </div>
+                {isLoading? <Loader/> : 
+                <React.Fragment>
+                    <TodoList todos={todos} onRemoveTodo={onRemoveTodo} onToggleTodo={onToggleTodo} />
+                    <hr />
+                    <h2>Todos Table</h2>
+                    <div style={{ width: '60%', margin: 'auto' }}>
+                        <DataTable todos={todos} onRemoveTodo={onRemoveTodo} />
+                    </div>
+                     </React.Fragment>}
             </section>
         )
     
