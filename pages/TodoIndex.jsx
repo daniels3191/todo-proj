@@ -3,7 +3,7 @@ import { TodoList } from "../cmps/TodoList.jsx"
 import { DataTable } from "../cmps/data-table/DataTable.jsx"
 import { todoService } from "../services/todo.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
-import { changeIsLoading, loadTodos, removeTodo, setFilterBy } from "../store/actions/todo.actions.js"
+import { changeIsLoading, getFilteredTodos, loadTodos, removeTodo, setFilterBy } from "../store/actions/todo.actions.js"
 import { Loader } from "../cmps/Loader.jsx"
 
 
@@ -13,22 +13,21 @@ const { useSelector, useDispatch } = ReactRedux
 
 export function TodoIndex() {
 
-    const todos = useSelector(state => state.todos)
+    const todos = useSelector(getFilteredTodos)
     const isLoading = useSelector(state => state.isLoading)
     const filterBy = useSelector(state => state.filterBy)
 
     // Special hook for accessing search-params:
-    const [searchParams, setSearchParams] = useSearchParams()
+    // const [searchParams, setSearchParams] = useSearchParams()
+    // const defaultFilter = todoService.getFilterFromSearchParams(searchParams)
 
-    const defaultFilter = todoService.getFilterFromSearchParams(searchParams)
+    // useEffect(() => {
+    //     setFilterBy(defaultFilter)
+    // }, [])
 
     useEffect(() => {
-        setFilterBy(defaultFilter)
-    }, [])
-
-    useEffect(() => {
-        setSearchParams(filterBy)
-        loadTodos(filterBy)
+        // setSearchParams(filterBy)
+        loadTodos()
     }, [filterBy])
 
     function onRemoveTodo(todoId) {

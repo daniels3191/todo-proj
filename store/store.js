@@ -4,7 +4,7 @@ const { createStore } = Redux
 
 
 const initialState = {
-    todos: null,
+    todos: [],
     isLoading: false,
     filterBy: todoService.getDefaultFilter()
 }
