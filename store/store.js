@@ -1,4 +1,5 @@
 import { todoService } from "../services/todo.service.js"
+import { userService } from "../services/user.service.js"
 
 const { createStore } = Redux
 
@@ -6,7 +7,9 @@ const { createStore } = Redux
 const initialState = {
     todos: [],
     isLoading: false,
-    filterBy: todoService.getDefaultFilter()
+    filterBy: todoService.getDefaultFilter(),
+
+    loggedinUser: userService.getLoggedinUser()
 }
 
 
@@ -18,6 +21,8 @@ export const UPDATE_TODOS = 'UPDATE_TODOS'
 
 export const SET_IS_LOADING = 'SET_IS_LOADING'
 export const SET_FILTERBY = 'SET_FILTERBY'
+
+export const SET_USER = 'SET_USER'
 
 function appReducer(state = initialState, cmd) {
 
@@ -43,6 +48,9 @@ function appReducer(state = initialState, cmd) {
 
         case SET_FILTERBY:
             return { ...state, filterBy: cmd.filterBy }
+
+        case SET_USER:
+            return { ...state, loggedinUser: cmd.loggedinUser }
 
 
         default:
