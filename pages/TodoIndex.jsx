@@ -3,7 +3,7 @@ import { TodoList } from "../cmps/TodoList.jsx"
 import { DataTable } from "../cmps/data-table/DataTable.jsx"
 import { todoService } from "../services/todo.service.js"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
-import { changeIsLoading, loadTodos, setFilterBy } from "../store/actions/todo.actions.js"
+import { changeIsLoading, loadTodos, removeTodo, setFilterBy } from "../store/actions/todo.actions.js"
 
 
 const { useState, useEffect } = React
@@ -30,9 +30,8 @@ export function TodoIndex() {
     }, [filterBy])
 
     function onRemoveTodo(todoId) {
-        todoService.remove(todoId)
+        removeTodo(todoId)
             .then(() => {
-                setTodos(prevTodos => prevTodos.filter(todo => todo._id !== todoId))
                 showSuccessMsg(`Todo removed`)
             })
             .catch(err => {
@@ -54,11 +53,7 @@ export function TodoIndex() {
             })
     }
 
-    if (!todos) {
-        changeIsLoading(true)
-        return <div>Loading...</div>
-    } else {
-        changeIsLoading(false)
+    if (!todos) return <div>Loading...</div>
         return (
             <section className="todo-index">
                 <TodoFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
@@ -74,5 +69,5 @@ export function TodoIndex() {
                 </div>
             </section>
         )
-    }
+    
 }

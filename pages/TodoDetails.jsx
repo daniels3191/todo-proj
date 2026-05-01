@@ -34,11 +34,8 @@ export function TodoDetails() {
         // navigate(-1)
     }
 
-    if (!todos) {
-        changeIsLoading('true')
-        return <div>Loading...</div>
-    } else {
-        changeIsLoading('flase')
+    if (!todos) return <div>Loading...</div>
+
         return (
             <section className="todo-details">
                 <h1 className={(todo.isDone) ? 'done' : ''}>{todo.txt}</h1>
@@ -53,5 +50,4 @@ export function TodoDetails() {
                 </div>
             </section>
         )
-    }
 }

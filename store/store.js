@@ -1,24 +1,41 @@
+import { todoService } from "../services/todo.service.js"
+
 const { createStore } = Redux
 
 
 const initialState = {
     todos: null,
     isLoading: false,
-    filterBy: {}
+    filterBy: todoService.getDefaultFilter()
 }
 
-const INCREMENT = 'INCREMENT'
+
 export const SET_TODOS = 'SET_TODOS'
+export const REMOVE_TODOS = 'REMOVE_TODOS'
+export const ADD_TODOS = 'ADD_TODOS'
+export const UPDATE_TODOS = 'UPDATE_TODOS'
+
+
 export const SET_IS_LOADING = 'SET_IS_LOADING'
 export const SET_FILTERBY = 'SET_FILTERBY'
 
 function appReducer(state = initialState, cmd) {
 
     switch (cmd.type) {
-        case INCREMENT:
-            return { ...state, counter: state.counter + 1 }
 
         case SET_TODOS:
+            return { ...state, todos: cmd.todos }
+
+        case REMOVE_TODOS:
+            var todos = state.todos.filter(todo => todo._id !== cmd.todoId)
+            return { ...state, todos }
+
+        case ADD_TODOS:
+            var todos = [...state.todos, cmd.todo]
+            return { ...state.todos, todos }
+
+        case UPDATE_TODOS:
+            var todos = state.todos.map(todo => todo.id === cmd.todoId? cmd.todo : todo)
             return { ...state, todos: cmd.todos }
 
         case SET_IS_LOADING:
