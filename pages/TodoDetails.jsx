@@ -7,6 +7,7 @@ const { useState, useEffect } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
 
 
+
 export function TodoDetails() {
 
     const [todo, setTodo] = useState(null)
@@ -34,7 +35,7 @@ export function TodoDetails() {
         // navigate(-1)
     }
 
-    if (!todos) return <div>Loading...</div>
+    if (!todo) return <div>Loading...</div>
 
         return (
             <section className="todo-details">

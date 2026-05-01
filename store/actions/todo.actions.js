@@ -14,7 +14,6 @@ export function loadTodos() {
             showErrorMsg('Cannot load todos')
         })
         .finally(() => store.dispatch({ type: SET_IS_LOADING, isLoading: false }))
-
 }
 
 export function removeTodo(todoId) {
@@ -23,8 +22,6 @@ export function removeTodo(todoId) {
     return todoService.remove(todoId)
         .then(() => store.dispatch({ type: REMOVE_TODOS, todoId }))
         .finally(() => store.dispatch({ type: SET_IS_LOADING, isLoading: false }))
-
-
 }
 
 export function saveTodo(todo) {
@@ -38,25 +35,20 @@ export function saveTodo(todo) {
 
 
 export function setFilterBy(filterBy) {
-    console.log(filterBy);
-
     store.dispatch({ type: SET_FILTERBY, filterBy })
-
 }
 
 
-export function getFilteredTodos(state){
+export function getFilteredTodos(state) {
     var todos = [...state.todos]
     const filterBy = state.filterBy
-    
-            if (filterBy.txt) {
-                const regExp = new RegExp(filterBy.txt, 'i')
-                todos = todos.filter(todo => regExp.test(todo.txt))
-            }
 
-            if (filterBy.importance) {
-                todos = todos.filter(todo => todo.importance >= filterBy.importance)
-            }
-
-            return todos
+    if (filterBy.txt) {
+        const regExp = new RegExp(filterBy.txt, 'i')
+        todos = todos.filter(todo => regExp.test(todo.txt))
+    }
+    if (filterBy.importance) {
+        todos = todos.filter(todo => todo.importance >= filterBy.importance)
+    }
+    return todos
 }
