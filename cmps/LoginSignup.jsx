@@ -4,7 +4,7 @@ import { userActions } from '../store/actions/user.actions.js'
 
 const { useState } = React
 
-export function LoginSignup({ onSetUser }) {
+export function LoginSignup() {
 
     const [isSignup, setIsSignUp] = useState(false)
     const [credentials, setCredentials] = useState(userService.getEmptyCredentials())
@@ -26,13 +26,12 @@ export function LoginSignup({ onSetUser }) {
 
     function login(credentials) {
         userActions.login(credentials)
+        navigate('/')
     }
 
     function signup(credentials) {
-        userService.signup(credentials)
-            .then(onSetUser)
-            .then(() => { showSuccessMsg('Signed in successfully') })
-            .catch((err) => { showErrorMsg('Oops try again') })
+        userActions.signup(credentials)
+        navigate('/')
     }
 
     return (

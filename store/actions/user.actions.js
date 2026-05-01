@@ -26,7 +26,5 @@ function signup(credentials) {
 function logout() {
     userService.logout()
         .then(() => store.dispatch({ type: SET_USER, loggedinUser: null }))
-        .catch((err) => {
-            showErrorMsg('OOPs try again')
-        })
+        .catch((err) => { showErrorMsg('OOPs try again')})
 }

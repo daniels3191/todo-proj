@@ -21,11 +21,7 @@ export function AppHeader() {
     userActions.logout()
     }
 
-    function onSetUser(loggedinUser) {
-        dispatch({type: SET_USER, loggedinUser})
-        navigate('/')
-    }
-    
+
     return (
         <header className="app-header full main-layout">
             <section className="header-container">
@@ -37,7 +33,7 @@ export function AppHeader() {
                     </ section >
                 ) : (
                     <section>
-                        <LoginSignup onSetUser={onSetUser} />
+                        <LoginSignup />
                     </section>
                 )}
                 <nav className="app-nav">
