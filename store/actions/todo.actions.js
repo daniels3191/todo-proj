@@ -17,11 +17,17 @@ export function loadTodos() {
 }
 
 export function removeTodo(todoId) {
-    store.dispatch({ type: SET_IS_LOADING, isLoading: true })
 
-    return todoService.remove(todoId)
-        .then(() => store.dispatch({ type: REMOVE_TODOS, todoId }))
-        .finally(() => store.dispatch({ type: SET_IS_LOADING, isLoading: false }))
+    let result = confirm(`Are you sure yo wnat to proceed with todo deletion?`)
+    if (!result) return Promise.reject()
+    else {
+        store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+
+        return todoService.remove(todoId)
+            .then(() => store.dispatch({ type: REMOVE_TODOS, todoId }))
+            .finally(() => store.dispatch({ type: SET_IS_LOADING, isLoading: false }))
+    }
+
 }
 
 export function saveTodo(todo) {

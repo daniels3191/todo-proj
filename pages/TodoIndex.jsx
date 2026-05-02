@@ -36,8 +36,13 @@ export function TodoIndex() {
                 showSuccessMsg(`Todo removed`)
             })
             .catch(err => {
-                console.log('err:', err)
-                showErrorMsg('Cannot remove todo ' + todoId)
+                if (err) {
+                    console.log('err:', err)
+                    showErrorMsg('Cannot remove todo ' + todoId)
+                } else {
+                    console.log('Action cancelled.')
+                    showErrorMsg('Action cancelled.')
+                }
             })
     }
 
@@ -55,14 +60,14 @@ export function TodoIndex() {
     }
 
     if (!todos) return <div>Loading...</div>
-        return (
-            <section className="todo-index">
-                <TodoFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
-                <div>
-                    <Link to="/todo/edit" className="btn" >Add Todo</Link>
-                </div>
-                <h2>Todos List</h2>
-                {isLoading? <Loader/> : 
+    return (
+        <section className="todo-index">
+            <TodoFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
+            <div>
+                <Link to="/todo/edit" className="btn" >Add Todo</Link>
+            </div>
+            <h2>Todos List</h2>
+            {isLoading ? <Loader /> :
                 <React.Fragment>
                     <TodoList todos={todos} onRemoveTodo={onRemoveTodo} onToggleTodo={onToggleTodo} />
                     <hr />
@@ -70,8 +75,8 @@ export function TodoIndex() {
                     <div style={{ width: '60%', margin: 'auto' }}>
                         <DataTable todos={todos} onRemoveTodo={onRemoveTodo} />
                     </div>
-                     </React.Fragment>}
-            </section>
-        )
-    
+                </React.Fragment>}
+        </section>
+    )
+
 }
